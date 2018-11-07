@@ -179,7 +179,7 @@ made available via introspection.
 
 To allow GraphQL service designers to easily publish documentation alongside the
 capabilities of a GraphQL service, GraphQL descriptions are defined using the
-Markdown syntax (as specified by [CommonMark](http://commonmark.org/)). In the
+Markdown syntax (as specified by [CommonMark](https://commonmark.org/)). In the
 type system definition language, these description strings (often {BlockString})
 occur immediately before the definition they describe.
 
@@ -438,7 +438,7 @@ encoding integer numbers larger than 32-bit.
 ### Float
 
 The Float scalar type represents signed double-precision fractional values
-as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).
+as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 Response formats that support an appropriate double-precision number type
 should use that type to represent this scalar.
 
@@ -517,17 +517,18 @@ often numeric, it should always serialize as a `String`.
 GraphQL is agnostic to ID format, and serializes to string to ensure consistency
 across many formats ID could represent, from small auto-increment numbers, to
 large 128-bit random numbers, to base64 encoded values, or string values of a
-format like [GUID](http://en.wikipedia.org/wiki/Globally_unique_identifier).
+format like [GUID](https://en.wikipedia.org/wiki/Globally_unique_identifier).
 
 GraphQL servers should coerce as appropriate given the ID formats they expect.
 When coercion is not possible they must raise a field error.
 
 **Input Coercion**
 
-When expected as an input type, any string (such as `"4"`) or integer (such
-as `4`) input value should be coerced to ID as appropriate for the ID formats
-a given GraphQL server expects. Any other input value, including float input
-values (such as `4.0`), must raise a query error indicating an incorrect type.
+When expected as an input type, any string (such as `"4"`) or integer (such as
+`4` or `-4`) input value should be coerced to ID as appropriate for the ID
+formats a given GraphQL server expects. Any other input value, including float
+input values (such as `4.0`), must raise a query error indicating an incorrect
+type.
 
 
 ### Scalar Extensions
@@ -1457,10 +1458,10 @@ particular, if a non-list is returned, the coercion should fail, as this
 indicates a mismatch in expectations between the type system and the
 implementation.
 
-If a list's item type is nullable, then errors occuring during preparation or
+If a list's item type is nullable, then errors occurring during preparation or
 coercion of an individual item in the list must result in a the value {null} at
 that position in the list along with an error added to the response. If a list's
-item type is non-null, an error occuring at an individual item in the list must
+item type is non-null, an error occurring at an individual item in the list must
 result in a field error for the entire list.
 
 Note: For more information on the error handling process, see "Errors and
@@ -1489,7 +1490,7 @@ Expected Type | Provided Value   | Coerced Value
 `[Int]`       | `[1, "b", true]` | Error: Incorrect item value
 `[Int]`       | `1`              | `[1]`
 `[Int]`       | `null`           | `null`
-`[[Int]]`     | `[[1], [2, 3]]`  | `[[1], [2, 3]`
+`[[Int]]`     | `[[1], [2, 3]]`  | `[[1], [2, 3]]`
 `[[Int]]`     | `[1, 2, 3]`      | Error: Incorrect item value
 `[[Int]]`     | `1`              | `[[1]]`
 `[[Int]]`     | `null`           | `null`
@@ -1524,7 +1525,7 @@ should be performed. If that result was not {null}, then the result of coercing
 the Non-Null type is that result. If that result was {null}, then a field error
 must be raised.
 
-Note: When a field error is raised on a non-null value, the error propogates to
+Note: When a field error is raised on a non-null value, the error propagates to
 the parent field. For more information on this process, see
 "Errors and Non-Nullability" within the Execution section.
 
@@ -1624,6 +1625,7 @@ ExecutableDirectiveLocation : one of
   `FRAGMENT_DEFINITION`
   `FRAGMENT_SPREAD`
   `INLINE_FRAGMENT`
+  `VARIABLE_DEFINITION`
 
 TypeSystemDirectiveLocation : one of
   `SCHEMA`
@@ -1649,8 +1651,7 @@ provide the `@deprecated` directive if representing deprecated portions of
 the schema.
 
 Directives must only be used in the locations they are declared to belong in.
-In this example, a directive is defined which can be used to annotate a
-fragment definition:
+In this example, a directive is defined which can be used to annotate a field:
 
 ```graphql example
 directive @example on FIELD
@@ -1746,7 +1747,7 @@ query myQuery($someTest: Boolean) {
 ```
 
 Note: Neither `@skip` nor `@include` has precedence over the other. In the case
-that both the `@skip` and `@include` directives are provided in on the same the
+that both the `@skip` and `@include` directives are provided on the same
 field or fragment, it *must* be queried only if the `@skip` condition is false
 *and* the `@include` condition is true. Stated conversely, the field or fragment
 must *not* be queried if either the `@skip` condition is true *or* the
@@ -1766,7 +1767,7 @@ to indicate deprecated portions of a GraphQL service's schema, such as
 deprecated fields on a type or deprecated enum values.
 
 Deprecations include a reason for why it is deprecated, which is formatted using
-Markdown syntax (as specified by [CommonMark](http://commonmark.org/)).
+Markdown syntax (as specified by [CommonMark](https://commonmark.org/)).
 
 In this example type definition, `oldField` is deprecated in favor of
 using `newField`.
